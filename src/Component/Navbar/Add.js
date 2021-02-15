@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import {Modal, Button, Form} from "react-bootstrap";
+import MovieList from "../Movielist/MovieList";
 
-const Add = ({handleMovie}) => {
+const Add = ({handleMovie, setMovielist, movielist}) => {
   const [show, setShow] = useState(false);
   const [name, setname] = useState("");
-  const [banner, setbanner] = useState("");
+  const [image, setimage] = useState("");
   const [type, settype] = useState("");
   const [description, setdescription] = useState("");
   const [rating, setrating] = useState(1);
@@ -12,7 +13,7 @@ const Add = ({handleMovie}) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const addmovie = () => {
-    handleMovie({name, banner, type, description, rating});
+    handleMovie({name, image, type, description, rating});
     handleClose();
   };
   return (
@@ -35,7 +36,7 @@ const Add = ({handleMovie}) => {
             <Form.Label>Movie Banner:</Form.Label>
             <Form.Control
               type="text"
-              onChange={(e) => setbanner(e.target.value)}
+              onChange={(e) => setimage(e.target.value)}
             />
             <Form.Label>Movie Type:</Form.Label>
             <Form.Control
@@ -59,7 +60,23 @@ const Add = ({handleMovie}) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={addmovie}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              addmovie();
+              setMovielist([
+                ...movielist,
+                {
+                  id: Math.random(),
+                  name: name,
+                  image: image,
+                  type: type,
+                  description: description,
+                  rating: Number(rating),
+                },
+              ]);
+            }}
+          >
             Add Movie
           </Button>
         </Modal.Footer>

@@ -3,14 +3,20 @@ import {Navbar, Nav, Form, FormControl, Button} from "react-bootstrap";
 import Add from "./Add";
 import ReactStars from "react-rating-stars-component";
 
-function NavBar({handlesearch, handleMovie}) {
-  const [Search, setSearch] = useState("");
+function NavBar({
+  setSearch,
+  handleMovie,
+  setsearchRating,
+  setMovielist,
+  movielist,
+}) {
+  // const [Search, setSearch] = useState("");
 
-  const [RatingSearch, setRatingSearch] = useState(1);
+  // const [RatingSearch, setRatingSearch] = useState(1);
 
-  const ratingChanged = (newRating) => {
-    setRatingSearch(newRating);
-  };
+  // const ratingChanged = (newRating) => {
+  //   setsearchRating(newRating);
+  // };
 
   return (
     <Navbar bg="light" variant="light" expand="lg">
@@ -20,11 +26,15 @@ function NavBar({handlesearch, handleMovie}) {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Add handleMovie={handleMovie} />
+          <Add
+            handleMovie={handleMovie}
+            setMovielist={setMovielist}
+            movielist={movielist}
+          />
         </Nav>
         <ReactStars
           count={5}
-          onChange={ratingChanged}
+          onChange={(v) => setsearchRating(v)}
           size={24}
           activeColor="#ffd700"
         />
@@ -36,9 +46,6 @@ function NavBar({handlesearch, handleMovie}) {
             className="mr-sm-2"
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Button onClick={handlesearch(Search)} variant="dark">
-            Search
-          </Button>
         </Form>
       </Navbar.Collapse>
     </Navbar>
